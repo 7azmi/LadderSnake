@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
 {
     public float moveSpeed
     {
-        get { return Manager.gameSpeed *3; }
+        get { return Board.gameSpeed *3; }
         set { moveSpeed = value ; }
     }
     public int pos = 0;
@@ -35,19 +35,20 @@ public class Movement : MonoBehaviour
     {
 
 
-        if (Manager.whoesTurn == gameObject)
+        if (Board.whoesTurn == gameObject)
         {
             if (distance != 0)
             {
                 if (pos + distance > 99)
                 {
                     distance = 0;
-                    if (Dice.dice != 6) Manager.Next();
-                    Dice.btn.interactable = true;
+                    if (Dice.dice != 6) Invoke("NextPlayer", 0.5f);
+                    else Dice.btn.interactable = true;
+
                 }
                 else
                 {
-                    Move(Manager.ways[pos + 1].transform);
+                    Move(Board.ways[pos + 1].transform);
 
                     if (SamePosition(pos + 1))
                     {
@@ -64,14 +65,15 @@ public class Movement : MonoBehaviour
         }
 
     }
-
     private void Action()
     {
         Move();
         if (!gameOver)
         {
-            if (Dice.dice != 6) Manager.Next();
-            Dice.btn.interactable = true;
+            if (Dice.dice != 6) Invoke("NextPlayer", 0.5f);
+            else Dice.btn.interactable = true;
+            //if (Dice.dice != 6) Board.Next();
+            //Dice.btn.interactable = true;
         }
         
         
@@ -81,8 +83,8 @@ public class Movement : MonoBehaviour
     {
         do
         {
-            transform.position = Vector3.MoveTowards(transform.position, Manager.ways[target].transform.position, moveSpeed * Time.deltaTime);
-        } while (transform.position != Manager.ways[target].transform.position);
+            transform.position = Vector3.MoveTowards(transform.position, Board.ways[target].transform.position, moveSpeed * Time.deltaTime);
+        } while (transform.position != Board.ways[target].transform.position);
         pos = target;
 
 
@@ -101,7 +103,7 @@ public class Movement : MonoBehaviour
     bool SamePosition(int targetIndex)
     {
 
-        if (transform.position == Manager.ways[targetIndex].position) return true;
+        if (transform.position == Board.ways[targetIndex].position) return true;
         return false;
     }
 
@@ -207,6 +209,12 @@ public class Movement : MonoBehaviour
         #endregion
 
 
+    }
+
+    private void NextPlayer()
+    {
+        Board.Next();
+        Dice.btn.interactable = true;
     }
 
     private void Winner()
