@@ -29,7 +29,7 @@ public class PlayersPanel : MonoBehaviour
             {
                 if (whoesTurn.transform.position != players[i].transform.position)
                     whoesTurn.transform.position = Vector3.MoveTowards(whoesTurn.transform.position, players[i].transform.position,
-                        Time.deltaTime * 500f); 
+                        Time.deltaTime * 500f *Board.gameSpeed); 
             }
         }
         

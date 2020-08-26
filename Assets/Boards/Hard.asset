@@ -15,5 +15,23 @@ MonoBehaviour:
   Board: {fileID: 21300000, guid: 9ce57fe467c442b408f5706d14daa97c, type: 3}
   Locked: 1
   boardLevel: 2
-  ladders: []
-  snakes: []
+  ladders:
+  - {x: 2, y: 63}
+  - {x: 5, y: 35}
+  - {x: 10, y: 69}
+  - {x: 25, y: 37}
+  - {x: 28, y: 54}
+  - {x: 62, y: 80}
+  - {x: 72, y: 90}
+  - {x: 77, y: 83}
+  - {x: 84, y: 96}
+  snakes:
+  - {x: 99, y: 61}
+  - {x: 97, y: 87}
+  - {x: 95, y: 76}
+  - {x: 93, y: 75}
+  - {x: 91, y: 73}
+  - {x: 74, y: 23}
+  - {x: 65, y: 55}
+  - {x: 34, y: 8}
+  - {x: 24, y: 3}

@@ -13,7 +13,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     void Start()
     {
         Advertisement.AddListener(this);
-        Advertisement.Initialize(google_ID, true);
+        Advertisement.Initialize(google_ID, false);
 
             
     }
@@ -34,6 +34,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         if (showResult == ShowResult.Finished)
         {
             print("DONE");
+
             Manager.Board_Card.Locked = false;
             //music
         }

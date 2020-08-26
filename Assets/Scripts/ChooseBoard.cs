@@ -77,6 +77,7 @@ public class ChooseBoard : MonoBehaviour
 
     public void Play()
     {
+        AudioManager.instance.StopMusic();
         SceneManager.LoadScene("The Game");
     }
 }

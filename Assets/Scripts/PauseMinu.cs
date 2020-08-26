@@ -11,11 +11,13 @@ public class PauseMinu : MonoBehaviour
     
     public void LoadMain()
     {
+        AudioManager.instance.StopMusic();
         SceneManager.LoadScene("Main minu");
     }
 
     public void Reload()
     {
+        AudioManager.instance.StopMusic();
         SceneManager.LoadScene("The Game");
     }
 

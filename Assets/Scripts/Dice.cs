@@ -17,7 +17,6 @@ public class Dice : MonoBehaviour
 
     void Awake()
     {
-        
         btn = gameObject.GetComponent<Button>();
         diceImage = gameObject.GetComponent<Image>();
     }
@@ -38,9 +37,10 @@ public class Dice : MonoBehaviour
 
     IEnumerator MakeRandomDiceFaces()
     {
-        DiceSpeed = 0.05f;
+        DiceSpeed = 0.06f - (Board.gameSpeed *.01f);
 
-        for (int i = 0; i < 15; i++)
+        int thrownCount = Random.Range(10, 20- (int)(Board.gameSpeed));
+        for (int i = 0; i < thrownCount; i++)
         {
             int med;
             do
@@ -48,25 +48,20 @@ public class Dice : MonoBehaviour
                 med = Random.Range(0, 6); 
             }
             while (med == dice - 1);
-            Debug.Log(med + 1);
             //slowMotion at the End
             DiceSpeed += 0.005f;
-            SoundManager.Play("step");
+            AudioManager.instance.Play("dice");
             yield return new WaitForSeconds(DiceSpeed);
             diceImage.sprite = sprites[med];
             dice = med + 1;
         }
-        SoundManager.Play("step");
-        if (dice == 6) Board.whoesTurn.GetComponent<Movement>().rollAgain = true;
-            Board.whoesTurn.GetComponent<Movement>().distance = dice;
         
+        if (dice == 6) AudioManager.instance.Play("dice6");
+                  else AudioManager.instance.Play("dice");
 
-        //yield return new WaitForSeconds(.5f);
-        //Engine.Player().GetComponent<Movement>().Distance(dice);
-        //yield return new WaitForSeconds(1f);
-            
-        
-        
+        Board.whoesTurn.GetComponent<Movement>().distance = dice;
+
+
     }
 
 

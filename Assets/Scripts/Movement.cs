@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Player))]
 public class Movement : MonoBehaviour
 {
     public float moveSpeed
@@ -14,7 +11,6 @@ public class Movement : MonoBehaviour
     public int distance;
     
 
-
     private bool gameOver;
     internal bool rollAgain;
     public GameObject WinnerWindow;
@@ -24,11 +20,13 @@ public class Movement : MonoBehaviour
     {
         gameOver = false;
         pos = -1;
+        
+        
     }
 
     void Start()
     {
-        //moveSpeed = 7;
+
     }
 
     void FixedUpdate()
@@ -41,23 +39,15 @@ public class Movement : MonoBehaviour
             {
                 if (pos + distance > 99)
                 {
-                    distance = 0;
-                    if (Dice.dice != 6) Invoke("NextPlayer", 0.5f);
-                    else Dice.btn.interactable = true;
+                    //choose move Back or don't move when dice_number > 100
+                    Move("Go back"); //Manager.ToFinish
+
+
 
                 }
                 else
                 {
-                    Move(Board.ways[pos + 1].transform);
-
-                    if (SamePosition(pos + 1))
-                    {
-                        distance--;
-                        pos++;
-                        SoundManager.Play("btn");
-                        //for Special Positions (and or) change Player I like typing  
-                        if (distance == 0) Action();
-                    }
+                    StepForward();
                 }
 
             }
@@ -65,12 +55,63 @@ public class Movement : MonoBehaviour
         }
 
     }
+
+    private void StepForward()
+    {
+        Move(Board.ways[pos + 1].transform);
+
+        if (SamePosition(pos + 1))
+        {
+            distance--;
+            pos++;
+            AudioManager.instance.Play("step");
+            //for Special Positions (and or) change Player I like typing  
+            if (distance == 0) Action();
+        }
+    }
+
+    private void GoBack()
+    {
+
+        if(Move(Board.ways[99 - distance].transform))
+        {
+            //none
+        }
+        else
+        {
+            pos = 99 - distance;
+            distance = 0;
+            Action();
+        }
+    }
+
+    private void Move(string rule)
+    {
+        switch (rule)
+        {
+
+            case "Do not move":
+                //rule 1 Do not move"
+                distance = 0;
+                if (Dice.dice != 6) Invoke("NextPlayer", 1 - (Board.gameSpeed * .25f));
+                else Dice.btn.interactable = true;
+                break;
+
+            case "Go back":
+                //rule 2
+                if (pos == 99) GoBack();
+                else StepForward();
+                break;
+        }
+        
+    }
+
     private void Action()
     {
         Move();
         if (!gameOver)
         {
-            if (Dice.dice != 6) Invoke("NextPlayer", 0.5f);
+            if (Dice.dice != 6) Invoke("NextPlayer", 1 - (Board.gameSpeed * .25f));
             else Dice.btn.interactable = true;
             //if (Dice.dice != 6) Board.Next();
             //Dice.btn.interactable = true;
@@ -92,7 +133,7 @@ public class Movement : MonoBehaviour
 
     bool Move(Transform target)
     {
-        if(transform.position!= target.position)
+        if(transform.position != target.position)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
             return true;
@@ -110,103 +151,31 @@ public class Movement : MonoBehaviour
     public void Move()
     {
         //change source later
-        foreach (Vector2 i in GameObject.FindGameObjectWithTag("Board").GetComponent<Board>().Snakes)
+        foreach (Vector2 i in Manager.Board_Card.snakes )
         {
-            if ((i.x-1) == pos)
+            if ((i.x - 1) == pos)
             {
-                Move((int)(i.y-1));
-                SoundManager.Play("btn");
+                Move((int)(i.y - 1));
+                AudioManager.instance.Play("snake");
                 break;
             }
         }
-        foreach (Vector2 i in GameObject.FindGameObjectWithTag("Board").GetComponent<Board>().Ladders)
+        foreach (Vector2 i in Manager.Board_Card.ladders)
         {
             if ((i.x-1) == pos)
             {
                 Move((int)(i.y-1));
-                SoundManager.Play("btn");
+                AudioManager.instance.Play("ladder");
                 break;
             }
         }
 
         if (pos == 99) 
         {
-            SoundManager.Play("win");
+            AudioManager.instance.Play("win");
             AdsManager.ShowAd();
             Winner();
-        }    
-        #region delete
-        //switch (pos)
-        //{
-        //    //Ladders
-        //    case 8:
-        //        Move(29); SoundManager.Play("btn");
-
-        //        break;
-        //    case 15:
-        //        Move(24); SoundManager.Play("btn");
-        //        break;
-        //    case 20:
-        //        Move(39); SoundManager.Play("btn");
-        //        break;
-        //    case 28:
-        //        Move(72); SoundManager.Play("btn");
-        //        break;
-        //    case 36:
-        //        Move(64); SoundManager.Play("btn");
-        //        break;
-        //    case 60:
-        //        Move(78); SoundManager.Play("btn");
-        //        break;
-        //    case 70:
-        //        Move(90); SoundManager.Play("btn");
-        //        break;
-        //    case 82:
-        //        Move(98); SoundManager.Play("btn");
-        //        break;
-        //    case 86:
-        //        Move(92); SoundManager.Play("btn");
-        //        break;
-
-        //    //Snakes
-        //    case 97:
-        //        Move(76); SoundManager.Play("btn");
-        //        break;
-        //    case 94:
-        //        Move(84); SoundManager.Play("btn");
-        //        break;
-        //    case 91:
-        //        Move(69); SoundManager.Play("btn");
-        //        break;
-        //    case 81:
-        //        Move(79); SoundManager.Play("btn");
-        //        break;
-        //    case 73:
-        //        Move(26); SoundManager.Play("btn");
-        //        break;
-        //    case 61:
-        //        Move(42); SoundManager.Play("btn");
-        //        break;
-        //    case 50:
-        //        Move(31); SoundManager.Play("btn");
-        //        break;
-        //    case 34:
-        //        Move(6); SoundManager.Play("btn");
-        //        break;
-        //    case 23:
-        //        Move(1); SoundManager.Play("btn");
-        //        break;
-        //   //winning
-        //    case 99:
-        //        SoundManager.Play("win");
-        //        AdsManager.ShowAd();
-        //        Winner();
-        //        break;
-
-
-
-        //}
-        #endregion
+        }  
 
 
     }
