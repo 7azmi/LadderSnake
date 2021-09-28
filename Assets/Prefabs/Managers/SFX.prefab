@@ -126,7 +126,7 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
   - name: Main minu
-    clip: {fileID: 8300000, guid: d5b3184ad3c6104459e11d5091841926, type: 3}
+    clip: {fileID: 8300000, guid: a496931e91ef20e42a39f71c6b626f29, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1
@@ -136,7 +136,7 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
   - name: The Game
-    clip: {fileID: 8300000, guid: 62d47a36164a7bd47873f16dd17ae887, type: 3}
+    clip: {fileID: 8300000, guid: 004ffe13e0cc2064a9ec5a55bb789e5e, type: 3}
     volume: 0.5
     volumeVariance: 0
     pitch: 1
