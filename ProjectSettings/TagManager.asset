@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Cell
+    uniqueID: 3159733203
+    locked: 0
   - name: Snakes
     uniqueID: 2196538591
     locked: 0

@@ -8,7 +8,7 @@ public class Cover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        board.sprite = Manager.Board_Card.Board;
+        //board.sprite = Manager.Board_Card.Board;
     }
 
     // Update is called once per frame
