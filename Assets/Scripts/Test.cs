@@ -5,7 +5,9 @@ using Sirenix.OdinInspector;
 
 public class Test : MonoBehaviour
 {
-    //public GameObject blackPixel;
+    //public GameObject prefab;
+
+
 
     private void Start()
     {
@@ -14,22 +16,11 @@ public class Test : MonoBehaviour
         //print(Screen.width);
     }
 
-    //public void OnGUI()
-    //{
-    //    GUI.Box(new Rect(500,500,500,500), );
-    //}
-    //private void Update()
-    //{
-    //    print(Screen.height);
-    //    print(Screen.width);
-    //}
-    void DrawGrids()
+    [Button]
+    public void IamCrazy(int value)
     {
+        GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", value);
 
-    }
-
-    void CreateCell(Vector2 size, Vector2 position)
-    {
 
     }
 }

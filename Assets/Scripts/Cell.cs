@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 [ExecuteInEditMode]
 public class Cell : MonoBehaviour
@@ -15,8 +16,9 @@ public class Cell : MonoBehaviour
                               //X
                               //L1
                               //R1
-    //[Space]
+
     
+    internal List<Player> settlers = new List<Player>();
 
     [Sirenix.OdinInspector.Button]
     public void Create(Vector2 size, float thickness, int index)
@@ -39,5 +41,10 @@ public class Cell : MonoBehaviour
         //RectTransform rectTransform = new RectTransform();
 
 
+    }
+
+    internal void Reposition(Player WhoIsMoving)
+    {
+        
     }
 }

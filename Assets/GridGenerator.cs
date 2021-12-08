@@ -7,7 +7,7 @@ using System;
 public class GridGenerator : MonoBehaviour
 {
     public GameObject cellPrefab;
-    public Cell[] Cells;
+    [ShowInInspector, ReadOnly]public static Cell[] Cells;
 
 
     private void Start()
@@ -23,7 +23,7 @@ public class GridGenerator : MonoBehaviour
         float height = Screen.height;
 
         int cellSize = CellSize(width, height);
-        int thickness = 4;
+        int thickness = 8;
 
         int rows = 10;
 
