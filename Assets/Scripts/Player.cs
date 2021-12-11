@@ -37,6 +37,9 @@ public class Player : MonoBehaviour
         rend.color = ColorPallete;
     }
 
+
+    //[Button]
+    //void click() => print(bounds + "\n" + bounds.magnitude);
     private void Start()
     {
         originalSize = Vector2.one;

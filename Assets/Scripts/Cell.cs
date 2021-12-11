@@ -26,7 +26,7 @@ public class Cell : MonoBehaviour
         //GetComponentInChildren<TextMeshProUGUI>().text = index.ToString();
 
         cellSize = size;
-
+        print(cellSize + "\n" + cellSize.magnitude);
         cellPosition = pos;
     }
 
@@ -40,20 +40,20 @@ public class Cell : MonoBehaviour
         if (settlers.Count == 1) settlers[0].transform.localScale = settlers[0].originalSize; //what happens usually
         else
         {
-            if ((settlers[settlers.Count-1].bounds.magnitude * settlers.Count) > cellSize.magnitude)//if bigger, you may do some changes to prevent none-integers
+            if ( Math.Sqrt((Mathf.Pow(settlers[settlers.Count-1].bounds.magnitude,2) * settlers.Count)) > cellSize.magnitude)//if bigger, you may do some changes to prevent none-integers
             {
                 for (int i = 0; i < 16; i++)//to the next generation screens 2^16
                 {
                     settlers[settlers.Count - 1].transform.localScale /= 2;
-                    if ((settlers[settlers.Count - 1].bounds.magnitude * settlers.Count) < cellSize.magnitude) break;
+                    if (Math.Sqrt((Mathf.Pow(settlers[settlers.Count - 1].bounds.magnitude, 2) * settlers.Count)) < cellSize.magnitude) break;
                 }
             }
-            else if((settlers[settlers.Count - 1].bounds.magnitude * settlers.Count *2) < cellSize.magnitude)//also if too small
+            else if (Math.Sqrt((Mathf.Pow(settlers[settlers.Count - 1].bounds.magnitude*2, 2) * settlers.Count)) < cellSize.magnitude)//also if too small
             {
                 for (int i = 0; i < 16; i++)
                 {
                     settlers[settlers.Count - 1].transform.localScale *= 2;
-                    if ((2 * settlers[settlers.Count-1].bounds.magnitude * settlers.Count) > cellSize.magnitude) break;
+                    if (Math.Sqrt((Mathf.Pow(settlers[settlers.Count - 1].bounds.magnitude * 2, 2) * settlers.Count)) > cellSize.magnitude) break;
                 }
             }
             foreach (var s in settlers)
