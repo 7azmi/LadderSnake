@@ -18,4 +18,12 @@ public class RollButton : MonoBehaviour
         Player.WhoseTurn.Move(steps);
         print(steps);
     }
+
+    [Button]
+    void Roll(int steps)
+    {
+        //int steps = Random.Range(1, 6);
+        Player.WhoseTurn.Move(steps);
+        //print(steps);
+    }
 }

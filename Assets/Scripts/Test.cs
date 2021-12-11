@@ -19,8 +19,12 @@ public class Test : MonoBehaviour
     [Button]
     public void IamCrazy(int value)
     {
-        GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", value);
+        GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", value); //magical code, thanks to that package
 
+        print("pos:" + transform.position);
+        print("local pos:" + transform.localPosition);
+        print("pos point:" + transform.TransformPoint(transform.position));
+        print("local pos point:" + transform.TransformPoint(transform.localPosition));
 
     }
 }

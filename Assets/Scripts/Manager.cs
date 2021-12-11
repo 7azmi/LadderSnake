@@ -13,7 +13,7 @@ public class Manager : MonoBehaviour
     private void Start()
     {
         Player.WhoseTurnIndex = 0;
-
+        Player.WhoseTurn.MyTurn?.Invoke();
 
     }
     //public static int PN;

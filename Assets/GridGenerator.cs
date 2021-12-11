@@ -9,8 +9,10 @@ public class GridGenerator : MonoBehaviour
     public GameObject cellPrefab;
     [ShowInInspector, ReadOnly]public static Cell[] Cells;
 
+    [SerializeField, ColorPalette] Color color1;
+    [SerializeField, ColorPalette] Color color2;
 
-    private void Start()
+    private void Awake()
     {
         Cells = CreateGrid();
     }
@@ -22,32 +24,45 @@ public class GridGenerator : MonoBehaviour
         float width = Screen.width;
         float height = Screen.height;
 
-        int cellSize = CellSize(width, height);
-        int thickness = 8;
+        Vector2 cellSize = CellSize(width, height);
+
+        int cellSizeX = (int)cellSize.x;
+        int cellSizeY = (int)cellSize.y;
 
         int rows = 10;
+        int column = 10;
 
         bool RTL = false;
+        bool isColor1 = false;
 
         int cellCounter = 0;
 
         //vertical
-        for (int j = (int) height - cellSize * rows ; j < height; j+= cellSize)
+        for (int j = (int)(height - cellSizeY * rows); j < height; j+= cellSizeY)
         {
-            float cellY = j - (height / 2) + cellSize / 2;
+            float cellPosY = j - (height / 2) + cellSizeY / 2;
             
             //horizontal
-            for (int i = 0; i < width; i += cellSize)
+            for (int i = 0; i < width; i += cellSizeX)
             {
                 cellCounter++;
 
-                float cellX;
-                if (RTL) cellX = (width - i) - (width / 2) - cellSize / 2;
-                else cellX = i - (width / 2) + cellSize / 2; 
-                GameObject cell = CreateCell(new Vector2(cellSize, cellSize), thickness, cellCounter);
-                cell.transform.localPosition = new Vector3(cellX, cellY, 0);
+                float cellPosX;
+                if (RTL) cellPosX = (width - i) - (width / 2) - cellSizeX / 2;
+                else cellPosX = i - (width / 2) + cellSizeX / 2;
 
-                cells.Add(cell.GetComponent<Cell>());
+                Color cellColor = isColor1 ? color1 : color2;
+                isColor1 = !isColor1;
+
+                GameObject cell = CreateCell(new Vector2(cellSizeX, cellSizeY), new Vector2(cellPosX, cellPosY), cellCounter, cellColor);
+                //cell.transform.localPosition = new Vector3(cellPosX, cellPosY, 0);
+
+                Cell cellComponent = cell.GetComponent<Cell>();
+
+                //cellComponent.cellPosition = new Vector2(cellPosX, cellPosY);
+                //cellComponent.cellSize = new Vector2(cellSize, cellSize);
+
+                cells.Add(cellComponent);
             }
             RTL = !RTL;
         }
@@ -58,20 +73,20 @@ public class GridGenerator : MonoBehaviour
 
 
     //screen lab
-    private int CellSize(float width, float height)
+    private Vector2 CellSize(float width, float height)
     {
         for (int i = 10; i > 0; i--)
         {
-            if (width % i == 0) return (int) width / i;
+            if (width % i == 0) return new Vector2((int) width / i, (int)width / i) ;
         }
-        
-        return 1; //won't happen mostly
+
+        return Vector2.one; //won't happen mostly
     }
 
-    GameObject CreateCell(Vector2 size, float thickness, int index)
+    GameObject CreateCell(Vector2 size, Vector2 pos, int index, Color color)
     {
         var cell = Instantiate(cellPrefab, transform);
-        cell.GetComponent<Cell>().Create(size, thickness, index);
+        cell.GetComponent<Cell>().Create(size, pos, index, color);
         return cell;
     }
 }
